@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { advertsReducer } from "./advertsSlice";
+import { advertsApi } from "./advertsApi";
 
 export const store = configureStore({
   reducer: {
-    adverts: advertsReducer,
+    [advertsApi.reducerPath]: advertsApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(advertsApi.middleware),
 });
