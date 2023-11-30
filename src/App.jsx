@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import CatalogPage from "./pages/CatalogPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import HomePage from "./pages/HomePage";
@@ -14,14 +18,18 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/catalog",
+        path: "catalog",
         element: <CatalogPage />,
       },
       {
-        path: "/favorites",
+        path: "favorites",
         element: <FavoritesPage />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <Navigate to="/" />,
   },
 ]);
 
