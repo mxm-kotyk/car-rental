@@ -3,6 +3,9 @@ import {
   useGetAdvertsQuery,
   useGetTotalAdvertsCountQuery,
 } from "../redux/advertsApi";
+import Filters from "../components/Filters/Filters";
+import CardGrid from "../components/cards/CardGrid/CardGrid";
+import Card from "../components/cards/Card/Card";
 
 const CatalogPage = () => {
   const [page, setPage] = useState(1);
@@ -12,18 +15,10 @@ const CatalogPage = () => {
 
   return (
     <>
-      <h1>Catalog</h1>
-      <ul>
-        {data &&
-          data.map((advert) => (
-            <li key={advert.id}>
-              <img src={advert.img} alt={`${advert.make} ${advert.model}`} />
-              <p>
-                {advert.id} {advert.make} {advert.model} {advert.year}
-              </p>
-            </li>
-          ))}
-      </ul>
+      <Filters />
+      <CardGrid>
+        {data && data.map((advert) => <Card advert={advert} key={advert.id} />)}
+      </CardGrid>
       <button
         type="button"
         onClick={() => setPage((prev) => prev + 1)}
