@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { useGetAllAdvertsQuery } from "../redux/advertsApi";
+import {
+  useGetAdvertsQuery,
+  useGetTotalAdvertsCountQuery,
+} from "../redux/advertsApi";
 
 const CatalogPage = () => {
   const [page, setPage] = useState(1);
-  const { data } = useGetAllAdvertsQuery(page);
-
-  console.log(data);
+  const { data } = useGetAdvertsQuery(page);
+  const { data: totalCount } = useGetTotalAdvertsCountQuery();
+  console.log(totalCount);
 
   return (
     <>
@@ -21,7 +24,11 @@ const CatalogPage = () => {
             </li>
           ))}
       </ul>
-      <button type="button" onClick={() => setPage((prev) => prev + 1)}>
+      <button
+        type="button"
+        onClick={() => setPage((prev) => prev + 1)}
+        disabled={data?.length === totalCount}
+      >
         Load More
       </button>
     </>

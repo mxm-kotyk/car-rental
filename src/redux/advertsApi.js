@@ -3,10 +3,10 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const advertsApi = createApi({
   reducerPath: "advertsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://648f2fb475a96b664444ce4d.mockapi.io/",
+    baseUrl: "https://648f2fb475a96b664444ce4d.mockapi.io",
   }),
   endpoints: (builder) => ({
-    getAllAdverts: builder.query({
+    getAdverts: builder.query({
       query: (pageNumber) => `/adverts?page=${pageNumber}&limit=12`,
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
@@ -18,7 +18,11 @@ export const advertsApi = createApi({
         return currentArg !== previousArg;
       },
     }),
+    getTotalAdvertsCount: builder.query({
+      query: () => "/adverts",
+      transformResponse: (response) => response.length,
+    }),
   }),
 });
 
-export const { useGetAllAdvertsQuery } = advertsApi;
+export const { useGetAdvertsQuery, useGetTotalAdvertsCountQuery } = advertsApi;
