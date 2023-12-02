@@ -11,9 +11,9 @@ import LoadMoreBtn from "../components/LoadMoreBtn/LoadMoreBtn";
 
 const CatalogPage = () => {
   const [page, setPage] = useState(1);
-  const { data } = useGetAdvertsQuery(page);
-  const { data: totalCount } = useGetTotalAdvertsCountQuery();
-  console.log(totalCount);
+  const { data: adverts } = useGetAdvertsQuery(page);
+  const { data: statistic } = useGetTotalAdvertsCountQuery();
+  console.log(statistic);
 
   return (
     <>
@@ -21,11 +21,11 @@ const CatalogPage = () => {
         <Filters />
 
         <CardGrid>
-          {data &&
-            data.map((advert) => <Card advert={advert} key={advert.id} />)}
+          {adverts &&
+            adverts.map((advert) => <Card advert={advert} key={advert.id} />)}
         </CardGrid>
 
-        {data?.length !== totalCount && (
+        {adverts?.length !== statistic?.totalAds && (
           <LoadMoreBtn handleLoadMore={() => setPage((prev) => prev + 1)} />
         )}
       </Container>

@@ -20,7 +20,21 @@ export const advertsApi = createApi({
     }),
     getTotalAdvertsCount: builder.query({
       query: () => "/adverts",
-      transformResponse: (response) => response.length,
+      transformResponse: (response) => {
+        const makeList = response
+          .map((el) => el.make)
+          .reduce((acc, el) => {
+            if (!acc.includes(el)) acc.push(el);
+            return acc;
+          }, [])
+          .sort((a, b) => a.localeCompare(b));
+
+        const lowestPrice = Math.min(
+          ...response.map((el) => +el.rentalPrice.slice(1))
+        );
+
+        return { totalAds: response.length, lowestPrice, makeList };
+      },
     }),
   }),
 });
