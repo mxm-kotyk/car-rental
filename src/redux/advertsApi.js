@@ -18,7 +18,7 @@ export const advertsApi = createApi({
         return currentArg !== previousArg;
       },
     }),
-    getTotalAdvertsCount: builder.query({
+    getAdvertsStatistics: builder.query({
       query: () => "/adverts",
       transformResponse: (response) => {
         const makeList = response
@@ -29,14 +29,18 @@ export const advertsApi = createApi({
           }, [])
           .sort((a, b) => a.localeCompare(b));
 
-        const lowestPrice = Math.min(
-          ...response.map((el) => +el.rentalPrice.slice(1))
-        );
+        const priceList = response
+          .map((el) => +el.rentalPrice.slice(1))
+          .reduce((acc, el) => {
+            if (!acc.includes(el)) acc.push(el);
+            return acc;
+          }, [])
+          .sort((a, b) => a - b);
 
-        return { totalAds: response.length, lowestPrice, makeList };
+        return { totalAds: response.length, priceList, makeList };
       },
     }),
   }),
 });
 
-export const { useGetAdvertsQuery, useGetTotalAdvertsCountQuery } = advertsApi;
+export const { useGetAdvertsQuery, useGetAdvertsStatisticsQuery } = advertsApi;
