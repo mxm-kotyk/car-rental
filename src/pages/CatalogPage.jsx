@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
   useGetAdvertsQuery,
-  useGetTotalAdvertsCountQuery,
+  useGetAdvertsStatisticsQuery,
 } from "../redux/advertsApi";
 import Filters from "../components/Filters/Filters";
 import CardGrid from "../components/cards/CardGrid/CardGrid";
@@ -12,7 +12,7 @@ import LoadMoreBtn from "../components/LoadMoreBtn/LoadMoreBtn";
 const CatalogPage = () => {
   const [page, setPage] = useState(1);
   const { data: adverts } = useGetAdvertsQuery(page);
-  const { data: statistic } = useGetTotalAdvertsCountQuery();
+  const { data: statistic } = useGetAdvertsStatisticsQuery();
   console.log(statistic);
 
   return (
