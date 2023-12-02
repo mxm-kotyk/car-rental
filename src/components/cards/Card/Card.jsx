@@ -21,42 +21,43 @@ const Card = ({ advert }) => {
 
   return (
     <StyledCard>
-      <div>
-        <CardImgWrapper>
-          <CardImg src={advert.img} alt={`${advert.make} ${advert.model}`} />
-          <CardFavoriteBtn type="button">Add</CardFavoriteBtn>
-        </CardImgWrapper>
-        <CardTitleWrapper>
-          <CardTitleText>
-            {advert.make} {cardTitleLength < 20 && <span>{advert.model}</span>},{" "}
-            {advert.year}
-          </CardTitleText>
-          <CardTitleText>{advert.rentalPrice}</CardTitleText>
-        </CardTitleWrapper>
-        <CardTagList>
-          <li>
-            <CardTag>{advert.address.split(",")[1]}</CardTag>
-          </li>
-          <li>
-            <CardTag>{advert.address.split(",")[2]}</CardTag>
-          </li>
-          <li>
-            <CardTag>{advert.rentalCompany}</CardTag>
-          </li>
-          <li>
-            <CardTag>{advert.type}</CardTag>
-          </li>
-          <li>
-            <CardTag>{advert.make}</CardTag>
-          </li>
-          <li>
-            <CardTag>{advert.id}</CardTag>
-          </li>
-          <li>
-            <CardTag>{shortestFeatureString}</CardTag>
-          </li>
-        </CardTagList>
-      </div>
+      <CardImgWrapper>
+        <CardImg src={advert.img} alt={`${advert.make} ${advert.model}`} />
+        <CardFavoriteBtn type="button">Add</CardFavoriteBtn>
+      </CardImgWrapper>
+
+      <CardTitleWrapper>
+        <CardTitleText>
+          {advert.make} {cardTitleLength < 20 && <span>{advert.model}</span>},{" "}
+          {advert.year}
+        </CardTitleText>
+        <CardTitleText>{advert.rentalPrice}</CardTitleText>
+      </CardTitleWrapper>
+
+      <CardTagList>
+        <li>
+          <CardTag>{advert.address.split(",")[1]}</CardTag>
+        </li>
+        <li>
+          <CardTag>{advert.address.split(",")[2]}</CardTag>
+        </li>
+        <li>
+          <CardTag>{advert.rentalCompany}</CardTag>
+        </li>
+        <li>
+          <CardTag>{advert.type}</CardTag>
+        </li>
+        <li>
+          <CardTag>{advert.make}</CardTag>
+        </li>
+        <li>
+          <CardTag>{advert.id}</CardTag>
+        </li>
+        <li>
+          <CardTag>{shortestFeatureString}</CardTag>
+        </li>
+      </CardTagList>
+
       <CardLearnMoreBtn type="button">Learn more</CardLearnMoreBtn>
     </StyledCard>
   );

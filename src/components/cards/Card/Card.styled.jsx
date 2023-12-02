@@ -58,11 +58,21 @@ export const CardTagList = styled.ul`
   row-gap: 4px;
   margin-bottom: 28px;
   overflow: hidden;
+
+  & li {
+    position: relative;
+  }
+
   & :not(:last-child)::after {
+    position: absolute;
+    top: 1px;
+    right: -6px;
+    display: inline-block;
     content: "";
     width: 1px;
     height: 16px;
     background-color: rgba(18, 20, 23, 0.1);
+    /* outline: 1px solid rgba(18, 20, 23, 0.1); */
   }
 `;
 
