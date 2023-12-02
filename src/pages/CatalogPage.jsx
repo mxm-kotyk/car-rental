@@ -7,6 +7,7 @@ import Filters from "../components/Filters/Filters";
 import CardGrid from "../components/cards/CardGrid/CardGrid";
 import Card from "../components/cards/Card/Card";
 import Container from "../components/Container/Container";
+import LoadMoreBtn from "../components/LoadMoreBtn/LoadMoreBtn";
 
 const CatalogPage = () => {
   const [page, setPage] = useState(1);
@@ -18,17 +19,15 @@ const CatalogPage = () => {
     <>
       <Container>
         <Filters />
+
         <CardGrid>
           {data &&
             data.map((advert) => <Card advert={advert} key={advert.id} />)}
         </CardGrid>
-        <button
-          type="button"
-          onClick={() => setPage((prev) => prev + 1)}
-          disabled={data?.length === totalCount}
-        >
-          Load More
-        </button>
+
+        {data?.length !== totalCount && (
+          <LoadMoreBtn handleLoadMore={() => setPage((prev) => prev + 1)} />
+        )}
       </Container>
     </>
   );
