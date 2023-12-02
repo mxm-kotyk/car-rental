@@ -1,0 +1,7 @@
+import styled from "@emotion/styled";
+
+export const StyledContainer = styled.div`
+  max-width: 1400px;
+  padding-inline: 128px;
+  margin-inline: auto;
+`;
