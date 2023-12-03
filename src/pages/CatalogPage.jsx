@@ -12,6 +12,9 @@ import LoadMoreBtn from "../components/LoadMoreBtn";
 import { filterAdverts } from "../helpers/advertsFilter";
 import Section from "../components/Section";
 import PageTitle from "../components/PageTitle";
+import Loader from "../components/Loader/Loader";
+import { Notify } from "notiflix/build/notiflix-notify-aio";
+import NoResults from "../components/NoResults/NoResults";
 
 const CatalogPage = () => {
   const [page, setPage] = useState(1);
@@ -19,8 +22,17 @@ const CatalogPage = () => {
   const [isLoadMoreVisible, setIsLoadMoreVisible] = useState(false);
   const [toggleLoadMoreFunc, setToggleLoadMoreFunc] = useState(false);
 
-  const { data: advertsPortion } = useGetAdvertsPortionQuery(page);
-  const { data } = useGetAllAdvertsQuery();
+  const {
+    data: advertsPortion,
+    isLoading: isLoadingAdvertsPortion,
+    error: advertsPortionError,
+  } = useGetAdvertsPortionQuery(page);
+
+  const {
+    data,
+    isLoading: isLoadingAllAdverts,
+    error: allAdvertsError,
+  } = useGetAllAdvertsQuery();
   const allAdverts = data?.allAdverts;
   const statistic = data?.statistic;
 
@@ -64,26 +76,36 @@ const CatalogPage = () => {
     setPage((prev) => prev + 1);
   };
 
-  // const handleFrontendPagination = () => {
-  //   if (adverts.length > 12) {
-  //     const numberOfPages = Math.ceil(adverts.length / 12);
-  //     console.log(numberOfPages);
-  //   }
-  // };
+  const loadingAllAdvertsIndicator = isLoadingAllAdverts && <Loader />;
+  const loadingPortionIndicator = isLoadingAdvertsPortion && <Loader />;
+  const showPortionError =
+    advertsPortionError &&
+    Notify.failure(
+      `Oops... Something went wrong. Server says: ${advertsPortionError.error}. Try reloading the page`
+    );
+  const showAllAdvertsError =
+    allAdvertsError &&
+    Notify.failure(
+      `Oops... Something went wrong. Server says: ${allAdvertsError.error}. Try reloading the page`
+    );
 
   return (
     <>
       <Section>
         <Container>
+          {loadingAllAdvertsIndicator}
+          {loadingPortionIndicator}
+          {showPortionError}
+          {showAllAdvertsError}
           <PageTitle>Catalog</PageTitle>
-
           <Filters onFormSubmit={handleFormSubmit} />
-
           <CardGrid>
-            {adverts &&
-              adverts.map((advert) => <Card advert={advert} key={advert.id} />)}
+            {adverts.length > 0 ? (
+              adverts.map((advert) => <Card advert={advert} key={advert.id} />)
+            ) : (
+              <NoResults type="catalog" />
+            )}
           </CardGrid>
-
           {isLoadMoreVisible && (
             <LoadMoreBtn
               handleLoadMore={
