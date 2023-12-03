@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useGetAdvertsStatisticsQuery } from "../../redux/advertsApi";
+import { useGetAllAdvertsQuery } from "../../redux/advertsApi";
 import CustomSelect from "../CustomSelect/CustomSelect";
 import {
   FiltersForm,
@@ -17,7 +17,8 @@ const Filters = ({ onFormSubmit }) => {
   const { mileageFrom, mileageTo } = useSelector((state) => state.filters);
   const dispatch = useDispatch();
 
-  const { data: statistic } = useGetAdvertsStatisticsQuery();
+  const { data } = useGetAllAdvertsQuery();
+  const statistic = data?.statistic;
 
   const selectMakeOptions = statistic?.makeList.map((make) => {
     return { value: make, label: make };

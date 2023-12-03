@@ -11,9 +11,6 @@ export const advertsApi = createApi({
     }),
     getAllAdverts: builder.query({
       query: () => "/adverts",
-    }),
-    getAdvertsStatistics: builder.query({
-      query: () => "/adverts",
       transformResponse: (response) => {
         const makeList = response
           .map((el) => el.make)
@@ -31,14 +28,13 @@ export const advertsApi = createApi({
           }, [])
           .sort((a, b) => a - b);
 
-        return { totalAds: response.length, priceList, makeList };
+        return {
+          allAdverts: response,
+          statistic: { totalAds: response.length, priceList, makeList },
+        };
       },
     }),
   }),
 });
 
-export const {
-  useGetAdvertsPortionQuery,
-  useGetAdvertsStatisticsQuery,
-  useGetAllAdvertsQuery,
-} = advertsApi;
+export const { useGetAdvertsPortionQuery, useGetAllAdvertsQuery } = advertsApi;

@@ -38,9 +38,11 @@ const filterAdverts = (adverts, filters) => {
 const CatalogPage = () => {
   const [page, setPage] = useState(1);
   const [adverts, setAdverts] = useState([]);
+  const [isLoadMoreVisible, setIsLoadMoreVisible] = useState(false);
 
   const { data: advertsPortion } = useGetAdvertsPortionQuery(page);
-  const { data: allAdverts } = useGetAllAdvertsQuery();
+  const { data } = useGetAllAdvertsQuery();
+  const allAdverts = data?.allAdverts;
 
   const filters = useSelector((state) => state.filters);
 
@@ -74,9 +76,9 @@ const CatalogPage = () => {
             adverts.map((advert) => <Card advert={advert} key={advert.id} />)}
         </CardGrid>
 
-        {/* {adverts?.length !== statistic?.totalAds && ( */}
-        <LoadMoreBtn handleLoadMore={() => setPage((prev) => prev + 1)} />
-        {/* )} */}
+        {isLoadMoreVisible && (
+          <LoadMoreBtn handleLoadMore={() => setPage((prev) => prev + 1)} />
+        )}
       </Container>
     </>
   );
