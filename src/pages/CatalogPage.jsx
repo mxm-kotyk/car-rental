@@ -11,6 +11,7 @@ import LoadMoreBtn from "../components/LoadMoreBtn/LoadMoreBtn";
 import { useSelector } from "react-redux";
 import { filterAdverts } from "../helpers/advertsFilter";
 import Section from "../components/Section/Section";
+import PageTitle from "../components/PageTitle/PageTitle";
 
 const CatalogPage = () => {
   const [page, setPage] = useState(1);
@@ -70,6 +71,8 @@ const CatalogPage = () => {
     <>
       <Section>
         <Container>
+          <PageTitle>Catalog</PageTitle>
+
           <Filters onFormSubmit={handleFormSubmit} />
 
           <CardGrid>
