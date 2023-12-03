@@ -9,31 +9,8 @@ import Card from "../components/cards/Card/Card";
 import Container from "../components/Container/Container";
 import LoadMoreBtn from "../components/LoadMoreBtn/LoadMoreBtn";
 import { useSelector } from "react-redux";
-
-const filterAdverts = (adverts, filters) => {
-  const { make, rentalPrice, mileageFrom, mileageTo } = filters;
-  let filteredAdverts = adverts;
-
-  if (make) {
-    filteredAdverts = filteredAdverts.filter((advert) => advert.make === make);
-  }
-  if (rentalPrice) {
-    filteredAdverts = filteredAdverts.filter(
-      (advert) => +advert.rentalPrice.slice(1) < rentalPrice
-    );
-  }
-  if (mileageFrom) {
-    filteredAdverts = filteredAdverts.filter(
-      (advert) => advert.mileage > mileageFrom
-    );
-  }
-  if (mileageTo) {
-    filteredAdverts = filteredAdverts.filter(
-      (advert) => advert.mileage < mileageTo
-    );
-  }
-  return filteredAdverts;
-};
+import { filterAdverts } from "../helpers/advertsFilter";
+import Section from "../components/Section/Section";
 
 const CatalogPage = () => {
   const [page, setPage] = useState(1);
@@ -91,24 +68,26 @@ const CatalogPage = () => {
 
   return (
     <>
-      <Container>
-        <Filters onFormSubmit={handleFormSubmit} />
+      <Section>
+        <Container>
+          <Filters onFormSubmit={handleFormSubmit} />
 
-        <CardGrid>
-          {adverts &&
-            adverts.map((advert) => <Card advert={advert} key={advert.id} />)}
-        </CardGrid>
+          <CardGrid>
+            {adverts &&
+              adverts.map((advert) => <Card advert={advert} key={advert.id} />)}
+          </CardGrid>
 
-        {isLoadMoreVisible && (
-          <LoadMoreBtn
-            handleLoadMore={
-              toggleLoadMoreFunc
-                ? () => isLoadMoreVisible(false)
-                : handleBackendPagination
-            }
-          />
-        )}
-      </Container>
+          {isLoadMoreVisible && (
+            <LoadMoreBtn
+              handleLoadMore={
+                toggleLoadMoreFunc
+                  ? () => isLoadMoreVisible(false)
+                  : handleBackendPagination
+              }
+            />
+          )}
+        </Container>
+      </Section>
     </>
   );
 };
