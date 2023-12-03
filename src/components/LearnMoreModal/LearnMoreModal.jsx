@@ -36,7 +36,6 @@ const LearnMoreModal = ({ advert }) => {
     </LearnMoreRentalCondItem>
   ));
 
-  console.log(advert);
   return (
     <LearnMoreModalWrapper>
       <LearnMoreImg src={advert.img} alt={`${advert.make} ${advert.model}`} />

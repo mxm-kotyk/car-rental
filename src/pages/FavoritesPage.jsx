@@ -7,7 +7,7 @@ import PageTitle from "../components/PageTitle";
 import NoResults from "../components/NoResults/NoResults";
 
 const FavoritesPage = () => {
-  const favorites = useSelector((store) => store.favorites.favorites);
+  const favorites = useSelector((store) => store.favorites.favorites) ?? [];
 
   return (
     <>
