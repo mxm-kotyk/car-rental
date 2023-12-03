@@ -68,4 +68,10 @@ export const FiltersSearchButton = styled.button`
   font-size: 14px;
   font-weight: 600;
   line-height: calc(20 / 14);
+  transition: background 200ms ease;
+
+  &:hover,
+  &:focus-visible {
+    background: #0b44cd;
+  }
 `;
