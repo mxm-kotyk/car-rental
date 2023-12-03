@@ -28,7 +28,7 @@ const CustomSelect = ({
 };
 
 CustomSelect.propTypes = {
-  selectOptions: PropTypes.array.isRequired,
+  selectOptions: PropTypes.array,
   handleChange: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
