@@ -1,14 +1,10 @@
 import styled from "@emotion/styled";
 import { StyledSection } from "../Section/Section.styled";
-import home_background from "../../assets/home-background-1x.jpg";
 import { Link } from "react-router-dom";
 
 export const HomePageSection = styled(StyledSection)`
   min-height: calc(100dvh - 75px);
   padding-top: 260px;
-  background-image: url(${home_background});
-  background-repeat: no-repeat;
-  background-position: bottom;
 `;
 
 export const ContentWrapper = styled.div`
