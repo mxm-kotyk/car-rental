@@ -6,7 +6,7 @@ import {
 import CatalogPage from "./pages/CatalogPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import HomePage from "./pages/HomePage";
-import Layout from "./components/Layout/Layout";
+import Layout from "./components/Layout";
 
 const router = createBrowserRouter([
   {

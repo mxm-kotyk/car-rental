@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useGetAllAdvertsQuery } from "../../redux/advertsApi";
-import CustomSelect from "../CustomSelect/CustomSelect";
+import CustomSelect from "../CustomSelect";
 import {
   FiltersForm,
   FiltersSearchButton,

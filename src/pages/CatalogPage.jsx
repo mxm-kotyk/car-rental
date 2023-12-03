@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   useGetAdvertsPortionQuery,
   useGetAllAdvertsQuery,
 } from "../redux/advertsApi";
-import Filters from "../components/Filters/Filters";
-import CardGrid from "../components/cards/CardGrid/CardGrid";
-import Card from "../components/cards/Card/Card";
-import Container from "../components/Container/Container";
-import LoadMoreBtn from "../components/LoadMoreBtn/LoadMoreBtn";
-import { useSelector } from "react-redux";
+import Filters from "../components/Filters";
+import CardGrid from "../components/cards/CardGrid";
+import Card from "../components/cards/Card";
+import Container from "../components/Container";
+import LoadMoreBtn from "../components/LoadMoreBtn";
 import { filterAdverts } from "../helpers/advertsFilter";
-import Section from "../components/Section/Section";
-import PageTitle from "../components/PageTitle/PageTitle";
+import Section from "../components/Section";
+import PageTitle from "../components/PageTitle";
 
 const CatalogPage = () => {
   const [page, setPage] = useState(1);

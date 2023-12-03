@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import Container from "../components/Container/Container";
-import Section from "../components/Section/Section";
-import Card from "../components/cards/Card/Card";
-import CardGrid from "../components/cards/CardGrid/CardGrid";
-import PageTitle from "../components/PageTitle/PageTitle";
+import Container from "../components/Container";
+import Section from "../components/Section";
+import Card from "../components/cards/Card";
+import CardGrid from "../components/cards/CardGrid";
+import PageTitle from "../components/PageTitle";
 
 const FavoritesPage = () => {
   const favorites = useSelector((store) => store.favorites.favorites) ?? [];
