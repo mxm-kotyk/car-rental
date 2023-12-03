@@ -6,9 +6,9 @@ export const filterAdverts = (adverts, filters) => {
     filteredAdverts = filteredAdverts.filter((advert) => advert.make === make);
   }
   if (rentalPrice) {
-    filteredAdverts = filteredAdverts.filter(
-      (advert) => +advert.rentalPrice.slice(1) < rentalPrice
-    );
+    filteredAdverts = filteredAdverts.filter((advert) => {
+      return +advert.rentalPrice.slice(1) < rentalPrice;
+    });
   }
   if (mileageFrom) {
     filteredAdverts = filteredAdverts.filter(
