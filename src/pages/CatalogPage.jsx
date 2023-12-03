@@ -27,6 +27,10 @@ const CatalogPage = () => {
   const filters = useSelector((state) => state.filters);
 
   useEffect(() => {
+    setAdverts([]);
+  }, []);
+
+  useEffect(() => {
     if (advertsPortion?.length > 0) {
       setAdverts((prev) => [...prev, ...advertsPortion]);
     }
