@@ -9,6 +9,7 @@ const CustomSelect = ({
   placeholder,
   isClearable,
   isSearchable,
+  name,
 }) => {
   return (
     <>
@@ -20,6 +21,7 @@ const CustomSelect = ({
         placeholder={placeholder}
         isClearable={isClearable}
         isSearchable={isSearchable}
+        name={name}
       />
     </>
   );
@@ -32,6 +34,7 @@ CustomSelect.propTypes = {
   placeholder: PropTypes.string.isRequired,
   isClearable: PropTypes.bool.isRequired,
   isSearchable: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 export default CustomSelect;

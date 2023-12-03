@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useGetAdvertsStatisticsQuery } from "../../redux/advertsApi";
 import CustomSelect from "../CustomSelect/CustomSelect";
 import {
@@ -9,8 +10,13 @@ import {
   MileageInputLabel,
   MileageInputWrapper,
 } from "./Filters.styled";
+import { useDispatch, useSelector } from "react-redux";
+import { updateFilters } from "../../redux/filtersSlice";
 
-const Filters = () => {
+const Filters = ({ onFormSubmit }) => {
+  const { mileageFrom, mileageTo } = useSelector((state) => state.filters);
+  const dispatch = useDispatch();
+
   const { data: statistic } = useGetAdvertsStatisticsQuery();
 
   const selectMakeOptions = statistic?.makeList.map((make) => {
@@ -21,22 +27,37 @@ const Filters = () => {
     return { value: price, label: price };
   });
 
-  const handleChange = (args) => {
-    console.log(args);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onFormSubmit();
+  };
+
+  const handleSelectChange = (payload, event) => {
+    if (!payload) {
+      dispatch(updateFilters({ [event.name]: "" }));
+      // onInputClear();
+      return;
+    }
+    dispatch(updateFilters({ [event.name]: payload.value }));
+  };
+
+  const handleTextInputChange = ({ target }) => {
+    dispatch(updateFilters({ [target.name]: target.value }));
   };
 
   return (
     <>
-      <FiltersForm>
+      <FiltersForm onSubmit={handleSubmit}>
         <div>
           <InputUpperText>Car brand</InputUpperText>
           <CustomSelect
             selectOptions={selectMakeOptions}
-            handleChange={handleChange}
+            handleChange={handleSelectChange}
             type="MAKE"
             placeholder="Enter the text"
             isClearable={true}
             isSearchable={true}
+            name="make"
           />
         </div>
 
@@ -44,11 +65,12 @@ const Filters = () => {
           <InputUpperText>Price/ 1 hour</InputUpperText>
           <CustomSelect
             selectOptions={selectPriceOptions}
-            handleChange={handleChange}
+            handleChange={handleSelectChange}
             type="PRICE"
             placeholder="To$"
             isClearable={true}
             isSearchable={false}
+            name="rentalPrice"
           />
         </div>
         <div>
@@ -56,11 +78,23 @@ const Filters = () => {
           <MileageGroupWrapper>
             <MileageInputWrapper>
               <MileageInputLabel htmlFor="mileage-from">From</MileageInputLabel>
-              <MileageInput type="text" id="mileage-from" />
+              <MileageInput
+                type="text"
+                id="mileage-from"
+                name="mileageFrom"
+                onChange={handleTextInputChange}
+                value={mileageFrom}
+              />
             </MileageInputWrapper>
             <MileageInputWrapper>
               <MileageInputLabel htmlFor="mileage-to">To</MileageInputLabel>
-              <MileageInput type="text" id="mileage-to" />
+              <MileageInput
+                type="text"
+                id="mileage-to"
+                name="mileageTo"
+                onChange={handleTextInputChange}
+                value={mileageTo}
+              />
             </MileageInputWrapper>
           </MileageGroupWrapper>
         </div>
@@ -68,6 +102,11 @@ const Filters = () => {
       </FiltersForm>
     </>
   );
+};
+
+Filters.propTypes = {
+  onFormSubmit: PropTypes.func.isRequired,
+  // onInputClear: PropTypes.func.isRequired,
 };
 
 export default Filters;
