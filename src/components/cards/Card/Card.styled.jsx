@@ -97,7 +97,6 @@ export const CardTagList = styled.ul`
     width: 1px;
     height: 16px;
     background-color: rgba(18, 20, 23, 0.1);
-    /* outline: 1px solid rgba(18, 20, 23, 0.1); */
   }
 `;
 

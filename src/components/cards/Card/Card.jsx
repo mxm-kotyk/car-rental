@@ -18,11 +18,16 @@ import {
   addToFavorites,
   removeFromFavorites,
 } from "../../../redux/favoritesSlice";
+import BasicModal from "../../BasicModal/BasicModal";
+import { useState } from "react";
+import LearnMoreModal from "../../LearnMoreModal/LearnMoreModal";
 
 const Card = ({ advert }) => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites.favorites) ?? [];
   const isFavorite = favorites.some((favorite) => favorite.id === advert.id);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const shortestFeatureString = [
     ...advert.accessories,
@@ -37,6 +42,10 @@ const Card = ({ advert }) => {
     } else {
       dispatch(addToFavorites(advert));
     }
+  };
+
+  const handleToggleModal = () => {
+    setIsModalOpen((prev) => !prev);
   };
 
   return (
@@ -93,24 +102,32 @@ const Card = ({ advert }) => {
         </li>
       </CardTagList>
 
-      <CardLearnMoreBtn type="button">Learn more</CardLearnMoreBtn>
+      <CardLearnMoreBtn type="button" onClick={handleToggleModal}>
+        Learn more
+      </CardLearnMoreBtn>
+
+      {isModalOpen && (
+        <BasicModal toggleModal={handleToggleModal}>
+          <LearnMoreModal advert={advert} />
+        </BasicModal>
+      )}
     </StyledCard>
   );
 };
 
 Card.propTypes = {
   advert: PropTypes.object.isRequired,
-  id: PropTypes.number.isRequired,
-  year: PropTypes.number.isRequired,
-  make: PropTypes.string.isRequired,
-  model: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  img: PropTypes.string.isRequired,
-  rentalPrice: PropTypes.string.isRequired,
-  address: PropTypes.string.isRequired,
-  rentalCompany: PropTypes.string.isRequired,
-  functionalities: PropTypes.arrayOf(PropTypes.string).isRequired,
-  accessories: PropTypes.arrayOf(PropTypes.string).isRequired,
+  id: PropTypes.number,
+  year: PropTypes.number,
+  make: PropTypes.string,
+  model: PropTypes.string,
+  type: PropTypes.string,
+  img: PropTypes.string,
+  rentalPrice: PropTypes.string,
+  address: PropTypes.string,
+  rentalCompany: PropTypes.string,
+  functionalities: PropTypes.arrayOf(PropTypes.string),
+  accessories: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default Card;
