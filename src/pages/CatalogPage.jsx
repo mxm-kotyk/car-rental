@@ -39,10 +39,12 @@ const CatalogPage = () => {
   const [page, setPage] = useState(1);
   const [adverts, setAdverts] = useState([]);
   const [isLoadMoreVisible, setIsLoadMoreVisible] = useState(false);
+  const [toggleLoadMoreFunc, setToggleLoadMoreFunc] = useState(false);
 
   const { data: advertsPortion } = useGetAdvertsPortionQuery(page);
   const { data } = useGetAllAdvertsQuery();
   const allAdverts = data?.allAdverts;
+  const statistic = data?.statistic;
 
   const filters = useSelector((state) => state.filters);
 
@@ -51,6 +53,15 @@ const CatalogPage = () => {
       setAdverts((prev) => [...prev, ...advertsPortion]);
     }
   }, [advertsPortion]);
+
+  useEffect(() => {
+    if (adverts.length >= 12) {
+      setIsLoadMoreVisible(true);
+    }
+    if (adverts.length === statistic?.totalAds || toggleLoadMoreFunc) {
+      setIsLoadMoreVisible(false);
+    }
+  }, [adverts.length, statistic?.totalAds, toggleLoadMoreFunc]);
 
   const handleFormSubmit = () => {
     if (Object.values(filters).every((value) => value === "")) {
@@ -62,9 +73,21 @@ const CatalogPage = () => {
       }
     } else {
       const filteredAdverts = filterAdverts(allAdverts, filters);
+      setToggleLoadMoreFunc(true);
       setAdverts(filteredAdverts);
     }
   };
+
+  const handleBackendPagination = () => {
+    setPage((prev) => prev + 1);
+  };
+
+  // const handleFrontendPagination = () => {
+  //   if (adverts.length > 12) {
+  //     const numberOfPages = Math.ceil(adverts.length / 12);
+  //     console.log(numberOfPages);
+  //   }
+  // };
 
   return (
     <>
@@ -77,7 +100,13 @@ const CatalogPage = () => {
         </CardGrid>
 
         {isLoadMoreVisible && (
-          <LoadMoreBtn handleLoadMore={() => setPage((prev) => prev + 1)} />
+          <LoadMoreBtn
+            handleLoadMore={
+              toggleLoadMoreFunc
+                ? () => isLoadMoreVisible(false)
+                : handleBackendPagination
+            }
+          />
         )}
       </Container>
     </>
