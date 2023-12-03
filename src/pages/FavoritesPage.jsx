@@ -14,15 +14,15 @@ const FavoritesPage = () => {
       <Section>
         <Container>
           <PageTitle>Favorites</PageTitle>
-          <CardGrid>
-            {favorites.length > 0 ? (
-              favorites.map((advert) => (
+          {favorites.length > 0 ? (
+            <CardGrid>
+              {favorites.map((advert) => (
                 <Card advert={advert} key={advert.id} />
-              ))
-            ) : (
-              <NoResults type="favorites" />
-            )}
-          </CardGrid>
+              ))}
+            </CardGrid>
+          ) : (
+            <NoResults type="favorites" />
+          )}
         </Container>
       </Section>
     </>

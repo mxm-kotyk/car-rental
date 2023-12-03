@@ -99,13 +99,15 @@ const CatalogPage = () => {
           {showAllAdvertsError}
           <PageTitle>Catalog</PageTitle>
           <Filters onFormSubmit={handleFormSubmit} />
-          <CardGrid>
-            {adverts.length > 0 ? (
-              adverts.map((advert) => <Card advert={advert} key={advert.id} />)
-            ) : (
-              <NoResults type="catalog" />
-            )}
-          </CardGrid>
+          {adverts.length > 0 ? (
+            <CardGrid>
+              {adverts.map((advert) => (
+                <Card advert={advert} key={advert.id} />
+              ))}
+            </CardGrid>
+          ) : (
+            <NoResults type="catalog" />
+          )}
           {isLoadMoreVisible && (
             <LoadMoreBtn
               handleLoadMore={
