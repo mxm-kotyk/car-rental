@@ -35,7 +35,6 @@ const Filters = ({ onFormSubmit }) => {
   const handleSelectChange = (payload, event) => {
     if (!payload) {
       dispatch(updateFilters({ [event.name]: "" }));
-      // onInputClear();
       return;
     }
     dispatch(updateFilters({ [event.name]: payload.value }));
@@ -106,7 +105,6 @@ const Filters = ({ onFormSubmit }) => {
 
 Filters.propTypes = {
   onFormSubmit: PropTypes.func.isRequired,
-  // onInputClear: PropTypes.func.isRequired,
 };
 
 export default Filters;

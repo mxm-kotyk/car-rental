@@ -64,12 +64,6 @@ const CatalogPage = () => {
     }
   };
 
-  // const handleInputClear = () => {
-  //   const filteredAdverts = filterAdverts(allAdverts, filters);
-  //   if
-  //   setAdverts(filteredAdverts);
-  // }
-
   return (
     <>
       <Container>
