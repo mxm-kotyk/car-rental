@@ -6,17 +6,11 @@ export const advertsApi = createApi({
     baseUrl: "https://648f2fb475a96b664444ce4d.mockapi.io",
   }),
   endpoints: (builder) => ({
-    getAdverts: builder.query({
+    getAdvertsPortion: builder.query({
       query: (pageNumber) => `/adverts?page=${pageNumber}&limit=12`,
-      serializeQueryArgs: ({ endpointName }) => {
-        return endpointName;
-      },
-      merge: (currentCache, newItems) => {
-        currentCache.push(...newItems);
-      },
-      forceRefetch({ currentArg, previousArg }) {
-        return currentArg !== previousArg;
-      },
+    }),
+    getAllAdverts: builder.query({
+      query: () => "/adverts",
     }),
     getAdvertsStatistics: builder.query({
       query: () => "/adverts",
@@ -30,7 +24,7 @@ export const advertsApi = createApi({
           .sort((a, b) => a.localeCompare(b));
 
         const priceList = response
-          .map((el) => +el.rentalPrice.slice(1))
+          .map((el) => Math.floor(+el.rentalPrice.slice(1) / 10) * 10)
           .reduce((acc, el) => {
             if (!acc.includes(el)) acc.push(el);
             return acc;
@@ -43,4 +37,8 @@ export const advertsApi = createApi({
   }),
 });
 
-export const { useGetAdvertsQuery, useGetAdvertsStatisticsQuery } = advertsApi;
+export const {
+  useGetAdvertsPortionQuery,
+  useGetAdvertsStatisticsQuery,
+  useGetAllAdvertsQuery,
+} = advertsApi;
