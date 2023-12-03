@@ -28,9 +28,18 @@ export const advertsApi = createApi({
           }, [])
           .sort((a, b) => a - b);
 
+        const lowestPrice = Math.min(
+          ...response.map((el) => +el.rentalPrice.slice(1))
+        );
+
         return {
           allAdverts: response,
-          statistic: { totalAds: response.length, priceList, makeList },
+          statistic: {
+            totalAds: response.length,
+            priceList,
+            makeList,
+            lowestPrice,
+          },
         };
       },
     }),
