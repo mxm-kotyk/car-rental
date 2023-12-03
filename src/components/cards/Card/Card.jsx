@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import {
   CardFavoriteBtn,
+  CardFavoriteIconEmpty,
+  CardFavoriteIconFilled,
   CardImg,
   CardImgWrapper,
   CardLearnMoreBtn,
@@ -10,8 +12,18 @@ import {
   CardTitleWrapper,
   StyledCard,
 } from "./Card.styled";
+import sprite from "../../../assets/sprite.svg";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from "../../../redux/favoritesSlice";
 
 const Card = ({ advert }) => {
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites.favorites) ?? [];
+  const isFavorite = favorites.some((favorite) => favorite.id === advert.id);
+
   const shortestFeatureString = [
     ...advert.accessories,
     ...advert.functionalities,
@@ -19,11 +31,34 @@ const Card = ({ advert }) => {
 
   const cardTitleLength = advert.make.length + advert.model.length;
 
+  const handleFavoriteBtnClick = () => {
+    if (isFavorite) {
+      dispatch(removeFromFavorites(advert.id));
+    } else {
+      dispatch(addToFavorites(advert));
+    }
+  };
+
   return (
     <StyledCard>
       <CardImgWrapper>
         <CardImg src={advert.img} alt={`${advert.make} ${advert.model}`} />
-        <CardFavoriteBtn type="button">Add</CardFavoriteBtn>
+
+        <CardFavoriteBtn
+          type="button"
+          className="favorite-btn"
+          onClick={handleFavoriteBtnClick}
+        >
+          {isFavorite ? (
+            <CardFavoriteIconFilled>
+              <use href={`${sprite}#icon-active`}></use>
+            </CardFavoriteIconFilled>
+          ) : (
+            <CardFavoriteIconEmpty>
+              <use href={`${sprite}#icon-normal`}></use>
+            </CardFavoriteIconEmpty>
+          )}
+        </CardFavoriteBtn>
       </CardImgWrapper>
 
       <CardTitleWrapper>
@@ -77,32 +112,5 @@ Card.propTypes = {
   functionalities: PropTypes.arrayOf(PropTypes.string).isRequired,
   accessories: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
-
-// {
-//     "id": 9582,
-//     "year": 2008,
-//     "make": "Buick",
-//     "model": "Enclave",
-//     "type": "SUV",
-//     "img": "https://consumerguide.com/wp-content/uploads/2016/04/08121501990001.jpg",
-//     "description": "The Buick Enclave is a stylish and spacious SUV known for its comfortable ride and luxurious features.",
-//     "fuelConsumption": "10.5",
-//     "engineSize": "3.6L V6",
-//     "accessories": [
-//       "Leather seats",
-//       "Panoramic sunroof",
-//       "Premium audio system"
-//     ],
-//     "functionalities": [
-//       "Power liftgate",
-//       "Remote start",
-//       "Blind-spot monitoring"
-//     ],
-//     "rentalPrice": "$40",
-//     "rentalCompany": "Luxury Car Rentals",
-//     "address": "123 Example Street, Kiev, Ukraine",
-//     "rentalConditions": "Minimum age: 25\nValid driver's license\nSecurity deposit required",
-//     "mileage": 5858
-//   },
 
 export default Card;

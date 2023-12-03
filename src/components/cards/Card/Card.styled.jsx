@@ -31,6 +31,31 @@ export const CardFavoriteBtn = styled.button`
   right: 14px;
 `;
 
+export const CardFavoriteIconEmpty = styled.svg`
+  width: 18px;
+  height: 18px;
+  fill: transparent;
+  stroke: #ffffffcc;
+  transition: stroke 200ms ease;
+
+  .favorite-btn:hover &,
+  .favorite-btn:focus-visible & {
+    stroke: #3470ffcc;
+  }
+`;
+
+export const CardFavoriteIconFilled = styled.svg`
+  width: 18px;
+  height: 18px;
+  fill: #3470ff;
+  transition: fill 200ms ease;
+
+  .favorite-btn:hover &,
+  .favorite-btn:focus-visible & {
+    fill: #0b44cd;
+  }
+`;
+
 export const CardTitleWrapper = styled.div`
   display: flex;
   align-items: flex-start;
